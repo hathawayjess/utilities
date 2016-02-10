@@ -56,7 +56,7 @@ var _ = { };
   _.each = function(collection, iterator) {
   
   };
-
+*******************************************************************************************************************
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
@@ -74,29 +74,67 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    var newArr = [];
     for (var i = 0; i < collection.length; i++) {
-      iterator
+      if (iterator(collection[i]) === true) {
+        newArr.push(collection[i]);
+        }
     }
+    return newArr;
   };
+
+  filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, iterator) {
+    var newArr = [];
+    for (var i = 0; i < collection.length; i++) {
+      if (!iterator(collection[i])) {
+        newArr.push(collection[i]);
+        }
+    }
+    return newArr;
   };
+
+  reject([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var newArr = array.sort();
+    for (var i = newArr.length - 1; i >= 0; i--) {
+      if (newArr[i] === newArr[i - 1]) {
+        newArr.splice(i, 1);
+      }
+    }
+    return newArr;
   };
 
+  uniq([3,3,5,5,6,6]);
 
   // Return the results of applying an iterator to each element.
   _.map = function(array, iterator) {
+    var newArr = [];
+    for (var i = 0; i < array.length; i++) {
+    newArr.push(iterator(array[i]));
+   }
+   return newArr;
   };
 
-  // Takes an array of objects and returns and array of the values of
+  map([1, 2, 3], function(num){ return num * 3; });
+
+  // Takes an array of objects and returns an array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(array, propertyName) {
+    var newArr = [];
+    for (var i = 0; i < array.length; i++) {
+      newArr.push(array[i].name);
+    }
+    return newArr;
   };
+
+  var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+  pluck(stooges, 'name');
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
