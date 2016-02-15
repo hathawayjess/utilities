@@ -54,9 +54,12 @@ var _ = { };
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
-  
+      for (var i = 0; i < collection.length; i++) {
+        iterator(collection[i]);
+      }
   };
-*******************************************************************************************************************
+
+
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
@@ -138,7 +141,20 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
+    for (var i = 0; i < list.length; i++) {
+      item = list[i];
+      if (typeof(methodName) === "string") {
+        item[methodName](args);
+      } else {
+        methodName.call(item, args)
+      }
+    }
+    return list;
   };
+
+  //_.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
+  //=> [[1, 5, 7], [1, 2, 3]]
+  
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
@@ -146,18 +162,15 @@ var _ = { };
   _.reduce = function(collection, iterator, initialValue) {
   };
 
-  // Determine if the array or object contains a given value (using `===`).
-  _.contains = function(collection, target) {
-  };
-
 
   // Determine whether all of the elements match a truth test.
-  _.every = function(collection, iterator) {
+  _.every = function(collection, iterator) {    
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
+
   };
 
 
